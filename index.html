@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContratClair — Comprenez chaque clause</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FAFAF7;--surface:#FFFFFF;--border:#E8E6DE;
+--text:#1A1A18;--muted:#6B6B60;--accent:#1D9E75;
+--accent-light:#E1F5EE;--danger:#E24B4A;--danger-light:#FCEBEB;
+--warn:#BA7517;--warn-light:#FAEEDA;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+.logo{font-family:'Instrument Serif',serif;font-size:1.4rem;color:var(--text)}
+.logo span{color:var(--accent)}
+.nav-cta{background:var(--text);color:#fff;border:none;padding:.55rem 1.25rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;cursor:pointer}
+.nav-cta:hover{opacity:.85}
+.hero{max-width:780px;margin:0 auto;padding:5rem 2rem 3rem;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-light);color:#0F6E56;font-size:.8rem;font-weight:500;padding:.35rem .9rem;border-radius:100px;margin-bottom:1.5rem}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75}
+h1{font-family:'Instrument Serif',serif;font-size:3.2rem;line-height:1.15;color:var(--text);margin-bottom:1.25rem}
+h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.7;max-width:560px;margin:0 auto 2.5rem}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--text);color:#fff;border:none;padding:.85rem 2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:opacity .15s}
+.btn-primary:hover{opacity:.82}
+.btn-secondary{background:transparent;color:var(--text);border:1.5px solid var(--border);padding:.85rem 2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:1rem;cursor:pointer;transition:background .15s}
+.btn-secondary:hover{background:var(--surface)}
+.hero-note{font-size:.8rem;color:var(--muted);margin-top:1rem}
+.social{text-align:center;padding:1.5rem 2rem;border-bottom:1px solid var(--border)}
+.social p{font-size:.85rem;color:var(--muted)}
+.social strong{color:var(--text)}
+.demo-section{max-width:880px;margin:0 auto;padding:4rem 2rem}
+.section-label{font-size:.8rem;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
+.section-title{font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:3rem}
+.app-container{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.app-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.app-logo{font-family:'Instrument Serif',serif;font-size:1.1rem}
+.app-logo span{color:var(--accent)}
+.tab-bar{display:flex;gap:4px;background:var(--bg);border-radius:8px;padding:3px}
+.tab{padding:.4rem .9rem;border-radius:6px;font-size:.85rem;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;color:var(--muted)}
+.tab.active{background:var(--surface);color:var(--text);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.upload-zone{padding:2rem}
+.drop-area{border:2px dashed var(--border);border-radius:12px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.drop-area:hover,.drop-area.dragover{border-color:var(--accent);background:var(--accent-light)}
+.drop-icon{width:48px;height:48px;background:var(--accent-light);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem}
+.drop-title{font-weight:500;font-size:1rem;margin-bottom:.4rem}
+.drop-sub{font-size:.85rem;color:var(--muted)}
+.drop-sub span{color:var(--accent);font-weight:500;cursor:pointer}
+#file-input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.or-divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:var(--muted);font-size:.85rem}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.paste-area{width:100%;min-height:120px;border:1px solid var(--border);border-radius:10px;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color .2s}
+.paste-area:focus{border-color:var(--accent)}
+.paste-area::placeholder{color:var(--muted)}
+.analyze-btn{width:100%;margin-top:1rem;background:var(--text);color:#fff;border:none;padding:1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:.6rem}
+.analyze-btn:hover{opacity:.85}
+.analyze-btn:disabled{opacity:.5;cursor:not-allowed}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.results-area{padding:2rem;display:none}
+.results-area.visible{display:block}
+.verdict-card{background:var(--accent-light);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;border-left:4px solid var(--accent)}
+.verdict-label{font-size:.75rem;font-weight:500;color:#0F6E56;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.verdict-text{font-size:.95rem;color:#085041;line-height:1.6}
+.risk-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.risk-card{background:var(--bg);border-radius:10px;padding:1rem;text-align:center;border:1px solid var(--border)}
+.risk-number{font-size:1.8rem;font-weight:500;line-height:1}
+.risk-label{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+.risk-low .risk-number{color:#1D9E75}
+.risk-med .risk-number{color:#BA7517}
+.risk-high .risk-number{color:#E24B4A}
+.section-head{font-weight:500;font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:1.5rem 0 .75rem}
+.clause-card{border:1px solid var(--border);border-radius:10px;margin-bottom:.75rem;overflow:hidden}
+.clause-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;cursor:pointer;background:var(--surface)}
+.clause-header:hover{background:var(--bg)}
+.clause-title{font-size:.9rem;font-weight:500}
+.risk-badge{font-size:.72rem;font-weight:500;padding:.25rem .65rem;border-radius:100px}
+.badge-low{background:var(--accent-light);color:#0F6E56}
+.badge-med{background:var(--warn-light);color:#854F0B}
+.badge-high{background:var(--danger-light);color:#A32D2D}
+.clause-body{padding:.9rem 1.1rem;border-top:1px solid var(--border);background:var(--bg);display:none}
+.clause-body.open{display:block}
+.clause-explanation{font-size:.88rem;color:var(--text);line-height:1.65;margin-bottom:.5rem}
+.clause-risk-reason{font-size:.82rem;color:var(--warn);background:var(--warn-light);padding:.5rem .75rem;border-radius:6px}
+.red-flags{background:var(--danger-light);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;border-left:4px solid var(--danger)}
+.red-flags-title{font-size:.75rem;font-weight:500;color:#A32D2D;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.flag-item{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.5rem;font-size:.88rem;color:#791F1F;line-height:1.5}
+.flag-item::before{content:'⚠';font-size:.8rem;flex-shrink:0;margin-top:.1rem}
+.missing{background:#F1EFE8;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.missing-title{font-size:.75rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.missing-item{font-size:.88rem;color:var(--muted);margin-bottom:.3rem;padding-left:1rem;position:relative}
+.missing-item::before{content:'—';position:absolute;left:0}
+.disclaimer{font-size:.75rem;color:var(--muted);text-align:center;padding:1rem 1.5rem;border-top:1px solid var(--border);line-height:1.5}
+.new-analysis-btn{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text);padding:.85rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;margin-top:1rem}
+.new-analysis-btn:hover{background:var(--bg)}
+.pricing{max-width:680px;margin:0 auto;padding:4rem 2rem}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2.5rem}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem}
+.price-card.featured{border-color:var(--accent);border-width:2px}
+.price-plan{font-size:.8rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.price-amount{font-family:'Instrument Serif',serif;font-size:2.5rem;margin-bottom:.25rem}
+.price-period{font-size:.85rem;color:var(--muted)}
+.price-features{margin:1.25rem 0;list-style:none}
+.price-features li{font-size:.88rem;padding:.35rem 0;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
+.price-features li:last-child{border:none}
+.price-features li::before{content:'✓';color:var(--accent);font-weight:600;flex-shrink:0}
+.price-btn{width:100%;padding:.85rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:opacity .15s;border:1.5px solid var(--border);background:transparent;color:var(--text)}
+.price-btn.featured-btn{background:var(--text);color:#fff;border-color:var(--text)}
+.price-btn:hover{opacity:.8}
+.gate-feature{font-size:.88rem;color:var(--text);margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem}
+.gate-feature::before{content:'✓';color:var(--accent);font-weight:500}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:.8rem;color:var(--muted)}
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Contrat<span>Clair</span></div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <span style="font-size:.85rem;color:var(--muted);cursor:pointer" onclick="showPage('pricing')">Tarifs</span>
+    <button class="nav-cta" onclick="showPage('app')">Analyser un contrat →</button>
+  </div>
+</nav>
+
+<!-- LANDING -->
+<div id="page-landing" class="page active">
+  <div class="hero">
+    <div class="badge"><span class="badge-dot"></span>Outil IA pour indépendants</div>
+    <h1>Comprenez ce que vous <em>signez vraiment</em></h1>
+    <p class="hero-sub">Uploadez n'importe quel contrat. Notre IA analyse chaque clause en langage clair, détecte les risques et vous dit ce qui manque. En 30 secondes.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="showPage('app')">Analyser mon contrat gratuitement</button>
+      <button class="btn-secondary" onclick="showPage('pricing')">Voir les tarifs</button>
+    </div>
+    <p class="hero-note">1 analyse gratuite · Pas de carte bancaire requise</p>
+  </div>
+
+  <div class="social">
+    <p>Utilisé par <strong>auto-entrepreneurs, consultants et freelances</strong> qui refusent de payer 200€ d'avocat pour lire un contrat</p>
+  </div>
+
+  <div class="demo-section">
+    <p class="section-label">Comment ça marche</p>
+    <h2 class="section-title">Trois étapes, trente secondes</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+      <div style="text-align:center;padding:1.5rem">
+        <div style="width:56px;height:56px;background:var(--accent-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem">📄</div>
+        <p style="font-weight:500;margin-bottom:.4rem">1. Uploadez</p>
+        <p style="font-size:.88rem;color:var(--muted);line-height:1.6">PDF, Word ou copiez-collez le texte directement</p>
+      </div>
+      <div style="text-align:center;padding:1.5rem">
+        <div style="width:56px;height:56px;background:var(--accent-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem">🔍</div>
+        <p style="font-weight:500;margin-bottom:.4rem">2. L'IA analyse</p>
+        <p style="font-size:.88rem;color:var(--muted);line-height:1.6">Chaque clause expliquée, les risques identifiés</p>
+      </div>
+      <div style="text-align:center;padding:1.5rem">
+        <div style="width:56px;height:56px;background:var(--accent-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem">✅</div>
+        <p style="font-weight:500;margin-bottom:.4rem">3. Décidez</p>
+        <p style="font-size:.88rem;color:var(--muted);line-height:1.6">Signez en connaissance de cause ou négociez</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing">
+    <p class="section-label" style="text-align:center">Tarifs</p>
+    <h2 class="section-title" style="text-align:center;margin-bottom:.5rem">Simple et transparent</h2>
+    <p style="text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:0">Sans engagement. Annulez quand vous voulez.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-plan">Gratuit</div>
+        <div class="price-amount">0€</div>
+        <div class="price-period">pour toujours</div>
+        <ul class="price-features">
+          <li>1 analyse complète</li>
+          <li>Rapport clause par clause</li>
+          <li>Détection des risques</li>
+        </ul>
+        <button class="price-btn" onclick="showPage('app')">Commencer</button>
+      </div>
+      <div class="price-card featured">
+        <div style="display:inline-block;background:var(--accent-light);color:#0F6E56;font-size:.72rem;font-weight:500;padding:.25rem .75rem;border-radius:100px;margin-bottom:.75rem">Le plus populaire</div>
+        <div class="price-plan" style="color:var(--accent)">Pro</div>
+        <div class="price-amount">19€</div>
+        <div class="price-period">/mois · sans engagement</div>
+        <ul class="price-features">
+          <li>Analyses illimitées</li>
+          <li>Historique complet</li>
+          <li>Export PDF</li>
+          <li>Clauses manquantes détectées</li>
+          <li>Support prioritaire</li>
+        </ul>
+        <button class="price-btn featured-btn" onclick="window.location.href='STRIPE_PAYMENT_LINK_HERE'">Passer à Pro — 19€/mois</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 ContratClair · <a href="#" style="color:var(--muted)">CGU</a> · <a href="#" style="color:var(--muted)">Politique de confidentialité</a></p>
+    <p style="margin-top:.5rem">⚖ ContratClair ne fournit pas de conseil juridique. Toute analyse est à titre informatif uniquement.</p>
+  </footer>
+</div>
+
+<!-- APP -->
+<div id="page-app" class="page">
+  <div style="max-width:720px;margin:0 auto;padding:2rem">
+    <button onclick="showPage('landing')" style="background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;margin-bottom:1.5rem;display:flex;align-items:center;gap:.4rem">← Retour</button>
+    <div class="app-container">
+      <div class="app-header">
+        <div class="app-logo">Contrat<span>Clair</span></div>
+        <div class="tab-bar" style="margin-left:auto">
+          <button class="tab active" onclick="switchTab('upload',this)">Analyser</button>
+          <button class="tab" onclick="switchTab('history',this)">Historique</button>
+        </div>
+      </div>
+      <div id="tab-upload">
+        <div class="upload-zone" id="upload-zone">
+          <div class="drop-area" id="drop-area">
+            <input type="file" id="file-input" accept=".pdf,.doc,.docx,.txt">
+            <div class="drop-icon">📎</div>
+            <p class="drop-title">Glissez votre contrat ici</p>
+            <p class="drop-sub">PDF, Word, TXT — ou <span onclick="document.getElementById('file-input').click()">parcourez vos fichiers</span></p>
+          </div>
+          <div class="or-divider">ou collez le texte directement</div>
+          <textarea class="paste-area" id="contract-text" placeholder="Collez ici le texte de votre contrat..."></textarea>
+          <button class="analyze-btn" id="analyze-btn" onclick="analyzeContract()">
+            <span id="btn-text">🔍 Analyser ce contrat</span>
+          </button>
+          <p style="font-size:.75rem;color:var(--muted);text-align:center;margin-top:.75rem">1 analyse gratuite · Pas de carte requise</p>
+        </div>
+        <div class="results-area" id="results-area"></div>
+      </div>
+      <div id="tab-history" style="display:none;padding:3rem 2rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:1rem">📂</div>
+        <p style="font-weight:500;margin-bottom:.4rem">Historique disponible avec Pro</p>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.5rem">Retrouvez tous vos contrats analysés</p>
+        <button class="btn-primary" onclick="window.location.href='STRIPE_PAYMENT_LINK_HERE'">Passer à Pro — 19€/mois</button>
+      </div>
+      <div class="disclaimer">⚖ Cette analyse est fournie à titre informatif uniquement et ne constitue pas un conseil juridique. Consultez un avocat pour toute décision importante.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING PAGE -->
+<div id="page-pricing" class="page">
+  <div style="max-width:720px;margin:0 auto;padding:2rem">
+    <button onclick="showPage('landing')" style="background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;margin-bottom:1.5rem">← Retour</button>
+    <div class="pricing">
+      <p class="section-label" style="text-align:center">Tarifs</p>
+      <h2 class="section-title" style="text-align:center;margin-bottom:.5rem">Simple et transparent</h2>
+      <p style="text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:0">Sans engagement. Annulez quand vous voulez.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-plan">Gratuit</div>
+          <div class="price-amount">0€</div>
+          <div class="price-period">pour toujours</div>
+          <ul class="price-features">
+            <li>1 analyse complète</li>
+            <li>Rapport clause par clause</li>
+            <li>Détection des risques</li>
+          </ul>
+          <button class="price-btn" onclick="showPage('app')">Commencer</button>
+        </div>
+        <div class="price-card featured">
+          <div style="display:inline-block;background:var(--accent-light);color:#0F6E56;font-size:.72rem;font-weight:500;padding:.25rem .75rem;border-radius:100px;margin-bottom:.75rem">Le plus populaire</div>
+          <div class="price-plan" style="color:var(--accent)">Pro</div>
+          <div class="price-amount">19€</div>
+          <div class="price-period">/mois · sans engagement</div>
+          <ul class="price-features">
+            <li>Analyses illimitées</li>
+            <li>Historique complet</li>
+            <li>Export PDF</li>
+            <li>Clauses manquantes détectées</li>
+            <li>Support prioritaire</li>
+          </ul>
+          <button class="price-btn featured-btn" onclick="window.location.href='STRIPE_PAYMENT_LINK_HERE'">Passer à Pro — 19€/mois</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let analysisCount = 0;
+let currentFile = null;
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-upload').style.display = tab === 'upload' ? 'block' : 'none';
+  document.getElementById('tab-history').style.display = tab === 'history' ? 'block' : 'none';
+}
+
+function toggleClause(header) {
+  header.nextElementSibling.classList.toggle('open');
+}
+
+const dropArea = document.getElementById('drop-area');
+const fileInput = document.getElementById('file-input');
+
+dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+dropArea.addEventListener('drop', e => {
+  e.preventDefault();
+  dropArea.classList.remove('dragover');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+function handleFile(file) {
+  currentFile = file;
+  dropArea.style.borderColor = 'var(--accent)';
+  dropArea.style.background = 'var(--accent-light)';
+  dropArea.querySelector('.drop-title').textContent = '✓ ' + file.name;
+  dropArea.querySelector('.drop-sub').textContent = 'Fichier prêt à analyser';
+  if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+    const reader = new FileReader();
+    reader.onload = e => { document.getElementById('contract-text').value = e.target.result; };
+    reader.readAsText(file);
+  }
+}
+
+async function analyzeContract() {
+  const text = document.getElementById('contract-text').value.trim();
+  if (!text && !currentFile) { alert('Veuillez coller le texte de votre contrat ou uploader un fichier.'); return; }
+  if (analysisCount >= 1) { showPaywall(); return; }
+
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').innerHTML = '<span class="spinner"></span> Analyse en cours...';
+
+  try {
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text.slice(0, 8000) })
+    });
+    const data = await response.json();
+    analysisCount++;
+    if (data.error) { renderError(data.error); } else { renderResults(data); }
+  } catch (err) {
+    renderError('Une erreur est survenue. Réessayez.');
+  } finally {
+    btn.disabled = false;
+    document.getElementById('btn-text').textContent = '🔍 Analyser ce contrat';
+  }
+}
+
+function renderResults(data) {
+  document.getElementById('upload-zone').style.display = 'none';
+  const counts = { low: 0, medium: 0, high: 0 };
+  (data.clauses || []).forEach(c => { if (counts[c.risk_level] !== undefined) counts[c.risk_level]++; });
+
+  const clausesHTML = (data.clauses || []).map(c => `
+    <div class="clause-card">
+      <div class="clause-header" onclick="toggleClause(this)">
+        <span class="clause-title">${c.title}</span>
+        <span class="risk-badge badge-${c.risk_level === 'low' ? 'low' : c.risk_level === 'medium' ? 'med' : 'high'}">
+          ${c.risk_level === 'low' ? 'Faible risque' : c.risk_level === 'medium' ? 'Risque modéré' : '⚠ Risque élevé'}
+        </span>
+      </div>
+      <div class="clause-body ${c.risk_level !== 'low' ? 'open' : ''}">
+        <p class="clause-explanation">${c.explanation}</p>
+        ${c.risk_reason ? `<p class="clause-risk-reason">⚠ ${c.risk_reason}</p>` : ''}
+      </div>
+    </div>`).join('');
+
+  const redFlagsHTML = data.red_flags?.length ? `
+    <div class="red-flags">
+      <div class="red-flags-title">Points d'alerte prioritaires</div>
+      ${data.red_flags.map(f => `<div class="flag-item">${f}</div>`).join('')}
+    </div>` : '';
+
+  const missingHTML = data.missing_clauses?.length ? `
+    <div class="missing">
+      <div class="missing-title">Clauses standard manquantes</div>
+      ${data.missing_clauses.map(m => `<div class="missing-item">${m}</div>`).join('')}
+    </div>` : '';
+
+  document.getElementById('results-area').innerHTML = `
+    <div style="padding:2rem">
+      <div class="verdict-card">
+        <div class="verdict-label">Verdict général</div>
+        <div class="verdict-text">${data.verdict}</div>
+      </div>
+      <div class="risk-summary">
+        <div class="risk-card risk-low"><div class="risk-number">${counts.low}</div><div class="risk-label">Faible risque</div></div>
+        <div class="risk-card risk-med"><div class="risk-number">${counts.medium}</div><div class="risk-label">Risque modéré</div></div>
+        <div class="risk-card risk-high"><div class="risk-number">${counts.high}</div><div class="risk-label">Risque élevé</div></div>
+      </div>
+      ${redFlagsHTML}
+      <div class="section-head">Analyse clause par clause</div>
+      ${clausesHTML}
+      ${missingHTML}
+      <button class="new-analysis-btn" onclick="resetAnalyzer()">← Analyser un autre contrat</button>
+    </div>`;
+  document.getElementById('results-area').classList.add('visible');
+}
+
+function renderError(msg) {
+  document.getElementById('results-area').innerHTML = `<div style="padding:2rem;text-align:center;color:var(--danger)">${msg}</div>`;
+  document.getElementById('results-area').classList.add('visible');
+}
+
+function showPaywall() {
+  document.getElementById('upload-zone').style.display = 'none';
+  document.getElementById('results-area').innerHTML = `
+    <div style="padding:2rem">
+      <div style="filter:blur(3px);pointer-events:none;opacity:.4">
+        <div class="verdict-card"><div class="verdict-label">Verdict général</div><div class="verdict-text">Votre rapport est prêt...</div></div>
+        <div class="risk-summary">
+          <div class="risk-card risk-low"><div class="risk-number">?</div><div class="risk-label">Faible risque</div></div>
+          <div class="risk-card risk-med"><div class="risk-number">?</div><div class="risk-label">Risque modéré</div></div>
+          <div class="risk-card risk-high"><div class="risk-number">?</div><div class="risk-label">Risque élevé</div></div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--accent);border-radius:16px;padding:2rem;text-align:center;margin-top:-1rem">
+        <div style="font-size:1.5rem;margin-bottom:.75rem">🔒</div>
+        <h3 style="font-family:'Instrument Serif',serif;font-size:1.4rem;margin-bottom:.5rem">Analyse illimitée avec Pro</h3>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">Vous avez utilisé votre analyse gratuite. Passez à Pro pour des analyses illimitées.</p>
+        <div style="font-size:2rem;font-weight:500;margin-bottom:1rem">19€<span style="font-size:.9rem;font-weight:400;color:var(--muted)">/mois</span></div>
+        <div style="display:inline-block;text-align:left;margin-bottom:1.25rem">
+          <div class="gate-feature">Analyses illimitées</div>
+          <div class="gate-feature">Historique de tous vos contrats</div>
+          <div class="gate-feature">Export PDF du rapport</div>
+          <div class="gate-feature">Sans engagement</div>
+        </div><br>
+        <button class="btn-primary" onclick="window.location.href='STRIPE_PAYMENT_LINK_HERE'">Passer à Pro — 19€/mois</button>
+        <br><button class="new-analysis-btn" style="margin-top:.75rem;display:inline-block;width:auto;padding:.6rem 1.5rem" onclick="resetAnalyzer()">Revenir</button>
+      </div>
+    </div>`;
+  document.getElementById('results-area').classList.add('visible');
+}
+
+function resetAnalyzer() {
+  document.getElementById('results-area').classList.remove('visible');
+  document.getElementById('results-area').innerHTML = '';
+  document.getElementById('upload-zone').style.display = 'block';
+  document.getElementById('contract-text').value = '';
+  currentFile = null;
+  dropArea.style.borderColor = '';
+  dropArea.style.background = '';
+  dropArea.querySelector('.drop-title').textContent = 'Glissez votre contrat ici';
+  dropArea.querySelector('.drop-sub').innerHTML = 'PDF, Word, TXT — ou <span onclick="document.getElementById(\'file-input\').click()">parcourez vos fichiers</span>';
+}
+</script>
+</body>
+</html>
